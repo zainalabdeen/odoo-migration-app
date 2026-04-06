@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_database_config,database.config,model_database_config,,1,1,1,1
+access_table_config,table.config,model_table_config,,1,1,1,1
+access_column_config,column.config,model_column_config,,1,1,1,1
+access_additional_column_config,additional.column.config,model_additional_column_config,,1,1,1,1
+access_data_migration,data.migration,model_data_migration,,1,1,1,1
+access_migration_app,migration.app,model_migration_app,,1,1,1,1
+access_migration_map,migration.map,model_migration_map,,1,1,1,1
+access_migration_error,migration.error,model_migration_error,,1,1,1,1
+access_migration_dashboard,migration.dashboard,model_migration_dashboard,,1,1,1,1
+access_discover_models_wizard,discover.models.wizard,model_discover_models_wizard,,1,1,1,1
+access_migration_m2m_relation,access.migration.m2m.relation,model_migration_m2m_relation,,1,1,1,1

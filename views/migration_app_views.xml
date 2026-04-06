@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="migration_app_tree_view" model="ir.ui.view">
+            <field name="name">migration.app.tree.view</field>
+            <field name="model">migration.app</field>
+            <field name="arch" type="xml">
+                <list string="Migration Apps">
+                    <field name="name"/>
+                    <field name="shortdesc"/>
+                    <field name="config_id"/>
+                    <field name="source_installed"/>
+                    <field name="dist_installed"/>
+                    <field name="exists_in_dist"/>
+                    <field name="is_primary_for_any_model"/>
+                    <field name="model_count"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="migration_app_form_view" model="ir.ui.view">
+            <field name="name">migration.app.form.view</field>
+            <field name="model">migration.app</field>
+            <field name="arch" type="xml">
+                <form string="Migration App">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="shortdesc"/>
+                            <field name="config_id"/>
+                            <field name="source_installed"/>
+                            <field name="dist_installed"/>
+                            <field name="exists_in_dist" readonly="1"/>
+                            <field name="is_primary_for_any_model"/>
+                            <field name="model_count" readonly="1"/>
+                        </group>
+                        <group string="Tables">
+                            <field name="table_config_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="source_model"/>
+                                    <field name="source_table"/>
+                                    <field name="dist_model"/>
+                                    <field name="dist_table"/>
+                                </list>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="migration_app_action" model="ir.actions.act_window">
+            <field name="name">Migration Apps</field>
+            <field name="res_model">migration.app</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="migration_app_menu"
+                  name="Apps"
+                  parent="database_migration_main_menu"
+                  action="migration_app_action"
+                  sequence="4"/>
+
+    </data>
+</odoo>

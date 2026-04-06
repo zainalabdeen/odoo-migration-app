@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="table_config_form_view" model="ir.ui.view">
+            <field name="name">table.config.form.view</field>
+            <field name="model">table.config</field>
+            <field name="arch" type="xml">
+                <form string="Table Data Mapping">
+                    <header>
+                        <button name="action_refresh_source_fields" type="object" string="Refresh Source Fields"/>
+                        <button name="action_map_destination_model_table" type="object" string="Map Dest Model/Table"/>
+                        <button name="action_map_destination_fields" type="object" string="Map Dest Fields"/>
+                        <button name="action_smart_map_fields_v2" type="object" string="AI Smart Map Fields" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group string="General Information">
+                                <field name="sequence"/>
+                                <field name="config_id"/>
+                                <field name="name"/>
+                                <field name="description"/>
+                                <field name="primary_app_id"/>
+                                <field name="app_ids" widget="many2many_tags"/>
+                            </group>
+
+                            <group string="Source">
+                                <field name="source_model"/>
+                                <field name="source_table"/>
+                                <field name="source_company_id"/>
+                                <field name="source_model_exists" readonly="1"/>
+                                <field name="source_table_exists" readonly="1"/>
+                            </group>
+
+                            <group string="Destination">
+                                <field name="dist_model"/>
+                                <field name="dist_table"/>
+                                <field name="dist_company_id"/>
+                                <field name="no_id"/>
+                                <field name="remove_null"/>
+                                <field name="dist_model_exists" readonly="1"/>
+                                <field name="dist_table_exists" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <field name="model_mapping_state" readonly="1"/>
+                            <field name="field_mapping_state" readonly="1"/>
+                            <field name="can_migrate" readonly="1"/>
+                            <field name="missing_field_count" readonly="1"/>
+                            <field name="dependency_level" readonly="1"/>
+                        </group>
+
+                        <notebook>
+                            <page string="Field Mapping">
+                                <field name="column_ids">
+                                    <list editable="bottom">
+                                        <field name="sequence"/>
+                                        <field name="source_col"/>
+                                        <field name="dist_col"/>
+                                        <field name="migrate"/>
+                                        <field name="migration_type"/>
+                                        <field name="source_ttype"/>
+                                        <field name="dist_ttype"/>
+                                        <field name="source_relation"/>
+                                        <field name="dist_relation"/>
+                                        <field name="dist_exists"/>
+                                        <field name="mapping_status"/>
+                                        <field name="match_score"/>
+                                        <field name="selection"/>
+                                        <field name="is_dist_translate"/>
+                                        <field name="analytic_distribution"/>
+                                        <field name="notes"/>
+                                    </list>
+                                </field>
+                            </page>
+
+                            <page string="Additional Columns not available in source">
+                                <field name="additional_column_ids">
+                                    <list editable="bottom">
+                                        <field name="dist_col"/>
+                                        <field name="default_value"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="table_config_tree_view" model="ir.ui.view">
+            <field name="name">table.config.tree.view</field>
+            <field name="model">table.config</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="sequence"/>
+                    <field name="name"/>
+                    <field name="config_id"/>
+                    <field name="source_model"/>
+                    <field name="dist_model"/>
+                    <field name="source_table"/>
+                    <field name="dist_table"/>
+                    <field name="model_mapping_state"/>
+                    <field name="field_mapping_state"/>
+                    <field name="can_migrate"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="table_config_action" model="ir.actions.act_window">
+            <field name="name">Table Config and Mapping</field>
+            <field name="res_model">table.config</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="table_config_menu"
+                  name="Table Data Mapping"
+                  parent="database_migration_main_menu"
+                  action="table_config_action"
+                  sequence="3"/>
+
+    </data>
+</odoo>

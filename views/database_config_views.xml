@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="database_config_form_view" model="ir.ui.view">
+            <field name="name">database.config.form.view</field>
+            <field name="model">database.config</field>
+            <field name="arch" type="xml">
+                <form string="Database Configuration">
+                    <header>
+                        <button name="action_test_source_connection" type="object" string="Test Source" class="oe_highlight"/>
+                        <button name="action_test_destination_connection" type="object" string="Test Destination"/>
+                        <button name="action_discover_apps" type="object" string="Discover Apps"/>
+                        <button name="action_open_discover_models_wizard" type="object" string="Discover Source Models"/>
+                        <button name="action_refresh_all_source_fields" type="object" string="Refresh Source Fields"/>
+                        <button name="action_map_all_destination_models" type="object" string="Map Dest Models/Tables"/>
+                        <button name="action_map_all_destination_fields" type="object" string="Map Dest Fields"/>
+                        <button name="action_smart_map_all_fields" type="object" string="AI Smart Map"/>
+                        <button name="action_recompute_dashboard" type="object" string="Refresh Dashboard"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="description"/>
+                                <field name="dashboard_id" readonly="1"/>
+                            </group>
+                            <group string="Data Source Info">
+                                <field name="source_host"/>
+                                <field name="source_db"/>
+                                <field name="source_user"/>
+                                <field name="source_password" password="True"/>
+                                <field name="source_port"/>
+                            </group>
+                            <group string="Data Destination Info">
+                                <field name="dist_host"/>
+                                <field name="dist_db"/>
+                                <field name="dist_user"/>
+                                <field name="dist_password" password="True"/>
+                                <field name="dist_port"/>
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="Apps">
+                                <field name="app_ids">
+                                    <list editable="bottom">
+                                        <field name="name"/>
+                                        <field name="shortdesc"/>
+                                        <field name="source_installed"/>
+                                        <field name="dist_installed"/>
+                                        <field name="exists_in_dist"/>
+                                        <field name="is_primary_for_any_model"/>
+                                        <field name="model_count"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Tables">
+                                <field name="table_config_ids">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="source_model"/>
+                                        <field name="dist_model"/>
+                                        <field name="source_table"/>
+                                        <field name="dist_table"/>
+                                        <field name="model_mapping_state"/>
+                                        <field name="field_mapping_state"/>
+                                        <field name="can_migrate"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="database_config_tree_view" model="ir.ui.view">
+            <field name="name">database.config.tree.view</field>
+            <field name="model">database.config</field>
+            <field name="arch" type="xml">
+                <list string="DB Config">
+                    <field name="name"/>
+                    <field name="source_host"/>
+                    <field name="source_db"/>
+                    <field name="dist_host"/>
+                    <field name="dist_db"/>
+                    <field name="description"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="database_config_action" model="ir.actions.act_window">
+            <field name="name">Database Configuration Info</field>
+            <field name="res_model">database.config</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="database_migration_main_menu" name="Database Migration" sequence="22"/>
+
+        <menuitem id="database_config_menu"
+                  name="Database Configuration"
+                  parent="database_migration_main_menu"
+                  action="database_config_action"
+                  sequence="2"/>
+
+    </data>
+</odoo>

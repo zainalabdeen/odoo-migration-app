@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="migration_dashboard_form_view" model="ir.ui.view">
+            <field name="name">migration.dashboard.form.view</field>
+            <field name="model">migration.dashboard</field>
+            <field name="arch" type="xml">
+                <form string="Migration Dashboard">
+                    <header>
+                        <button name="action_refresh" type="object" string="Refresh" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="config_id"/>
+                                <field name="progress" widget="progressbar"/>
+                            </group>
+                            <group>
+                                <field name="total_tables" readonly="1"/>
+                                <field name="ready_tables" readonly="1"/>
+                                <field name="mapped_tables" readonly="1"/>
+                                <field name="migrated_tables" readonly="1"/>
+                                <field name="failed_tables" readonly="1"/>
+                                <field name="total_errors" readonly="1"/>
+                                <field name="retry_errors" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="migration_dashboard_tree_view" model="ir.ui.view">
+            <field name="name">migration.dashboard.tree.view</field>
+            <field name="model">migration.dashboard</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="config_id"/>
+                    <field name="progress"/>
+                    <field name="total_tables"/>
+                    <field name="migrated_tables"/>
+                    <field name="failed_tables"/>
+                    <field name="total_errors"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="migration_dashboard_action" model="ir.actions.act_window">
+            <field name="name">Migration Dashboard</field>
+            <field name="res_model">migration.dashboard</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="migration_dashboard_menu"
+                  name="Dashboard"
+                  parent="database_migration_main_menu"
+                  action="migration_dashboard_action"
+                  sequence="5"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="data_migration_form_view" model="ir.ui.view">
+            <field name="name">migration.form.view</field>
+            <field name="model">data.migration</field>
+            <field name="arch" type="xml">
+                <form string="Data Migration">
+                    <header>
+                        <button name="action_validate"
+                                string="Validate"
+                                type="object"
+                                class="oe_highlight"
+                                invisible="state != 'draft'"/>
+
+                        <button name="action_sort_dependencies"
+                                string="Sort by Dependency"
+                                type="object"/>
+
+                        <button name="action_migrate"
+                                string="Start Migration"
+                                type="object"
+                                class="oe_highlight"
+                                invisible="state not in ('draft','validated','failed')"/>
+
+                        <button name="action_retry_failed"
+                                string="Retry Failed"
+                                type="object"
+                                invisible="state != 'failed'"/>
+
+                        <button name="action_remove_constrain"
+                                string="Remove FKY Check"
+                                type="object"
+                                invisible="constrain_state != 'not'"/>
+
+                        <button name="action_remove_null_constrain"
+                                string="Remove NULL Check"
+                                type="object"
+                                invisible="null_state != 'not'"/>
+
+                        <button name="action_set_constrain"
+                                string="Set FKY Check"
+                                type="object"
+                                invisible="constrain_state != 'removed'"/>
+
+                        <button name="action_set_null_constrain"
+                                string="Set NULL Check"
+                                type="object"
+                                nvisible="null_state != 'removed'"/>
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,validated,running,done,failed"/>
+                    </header>
+
+                    <sheet>
+                        <group string="Migration Description">
+                            <group>
+                                <field name="name"/>
+                                <field name="config_id"/>
+                                <field name="dashboard_id" readonly="1"/>
+                            </group>
+
+                            <group>
+                                <field name="constrain_state" readonly="1"/>
+                                <field name="null_state" readonly="1"/>
+                                <field name="table_done_count" readonly="1"/>
+                                <field name="row_done_count" readonly="1"/>
+                                <field name="row_failed_count" readonly="1"/>
+                            </group>
+
+                            <group string="Record Date">
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                            </group>
+
+                            <group string="Constraint Files">
+                                <field name="constrain_file" filename="constrain_filename"/>
+                                <field name="constrain_filename" invisible="1"/>
+                                <field name="null_file" filename="null_filename"/>
+                                <field name="null_filename" invisible="1"/>
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="Tables To Migrate">
+                                <field name="table_ids" domain="[('config_id','=', config_id)]">
+                                    <list>
+                                        <field name="sequence"/>
+                                        <field name="name"/>
+                                        <field name="source_model"/>
+                                        <field name="source_table"/>
+                                        <field name="dist_model"/>
+                                        <field name="dist_table"/>
+                                        <field name="can_migrate"/>
+                                        <field name="missing_field_count"/>
+                                    </list>
+                                </field>
+                            </page>
+
+                            <page string="Errors">
+                                <field name="error_ids" readonly="1">
+                                    <list>
+                                        <field name="table_config_id"/>
+                                        <field name="source_model"/>
+                                        <field name="source_table"/>
+                                        <field name="message"/>
+                                        <field name="state"/>
+                                    </list>
+                                </field>
+                            </page>
+
+                            <page string="ID Maps">
+                                <field name="map_ids" readonly="1">
+                                    <list>
+                                        <field name="model"/>
+                                        <field name="source_id"/>
+                                        <field name="dist_id"/>
+                                    </list>
+                                </field>
+                            </page>
+
+                            <page string="M2M Relations">
+                                <field name="m2m_relation_ids">
+                                    <list>
+                                        <field name="src_relation_table"/>
+                                        <field name="dist_relation_table"/>
+                                        <field name="source_model"/>
+                                        <field name="relation_model"/>
+                                        <field name="state"/>
+                                        <field name="note"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="data_migration_tree_view" model="ir.ui.view">
+            <field name="name">migration.tree.view</field>
+            <field name="model">data.migration</field>
+            <field name="arch" type="xml">
+                <list string="Data Migration">
+                    <field name="name"/>
+                    <field name="config_id"/>
+                    <field name="state"/>
+                    <field name="constrain_state"/>
+                    <field name="null_state"/>
+                    <field name="table_done_count"/>
+                    <field name="row_done_count"/>
+                    <field name="row_failed_count"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="data_migration_action" model="ir.actions.act_window">
+            <field name="name">Data Migration</field>
+            <field name="res_model">data.migration</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="migration_process_menu"
+                  name="Data Migration"
+                  parent="database_migration_main_menu"
+                  action="data_migration_action"
+                  sequence="1"/>
+    </data>
+</odoo>
