@@ -60,7 +60,7 @@ class DbColumnConfig(models.Model):
 
     src_db_column = fields.Char(string="Src DB Column Name")
     dist_db_column = fields.Char(string="dist DB Column Name")
-    company_dependent = fields.Boolean(string='Company Dependent')
+    is_dist_company_dependent = fields.Boolean(string='Dist Company Dependent')
 
     _sql_constraints = [
         ('column_config_unique', 'unique(table_id, source_col)', 'Source field must be unique per table.'),
